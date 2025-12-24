@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirmar Pedido - Centro de Salgado Deliciosos</title>
+<style>
+body {font-family: Arial, sans-serif;margin: 0;padding: 15px;min-height: 100vh;position: relative;background: #000;color: #333;}
+.slideshow-container {position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: -2;}
+.slide {position: absolute;top: 0;left: 0;width: 100%;height: 100%;background-size: cover;background-position: center;opacity: 0;transition: opacity 1.5s ease-in-out;}
+.slide.active { opacity: 1; }
+body::before {content: '';position: fixed;top: 0;left: 0;right: 0;bottom: 0;background: rgba(0, 0, 0, 0.45);z-index: -1;}
+.card {background: rgba(255, 255, 255, 0.95);padding: 30px;border-radius: 16px;max-width: 600px;margin: 20px auto;box-shadow: 0 8px 20px rgba(0,0,0,0.3);text-align: center;}
+h2 { color: #c62828; font-size: 26px; margin-bottom: 20px; }
+h3 { color: #d32f2f; margin: 25px 0 10px; }
+input {width: 100%;padding: 14px;margin-top: 10px;border-radius: 10px;border: 1px solid #ccc;font-size: 16px;box-sizing: border-box;}
+button {width: 100%;padding: 14px;margin-top: 20px;border: none;border-radius: 10px;font-size: 18px;font-weight: bold;cursor: pointer;}
+button:hover { opacity: 0.9; }
+.pix {background: #e8f5e8;padding: 20px;margin: 25px 0;border-radius: 12px;font-size: 18px;border: 2px dashed #4caf50;}
+.pix strong { color: #2e7d32; font-size: 20px; }
+#total { font-size: 28px; font-weight: bold; color: #c62828; }
+</style>
+</head>
+<body>
+
+<div class="slideshow-container">
+    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1624306346884-1e83b83c16ca?ixlib=rb-4.0.3&auto=format&fit=crop&q=80');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1630405090914-87b2d73c9c9e?ixlib=rb-4.0.3&auto=format&fit=crop&q=80');"></div>
+    <div class="slide" style="background-image: url('https://st2.depositphotos.com/4366637/10184/i/450/depositphotos_101845522-stock-photo-mixed-brazilian-snack-on-the.jpg');"></div>
+    <div class="slide" style="background-image: url('https://interlasermaquinas.com.br/wp-content/uploads/2022/12/salgados-para-festa-de-aniversario-1024x682.jpg');"></div>
+    <div class="slide" style="background-image: url('https://media.istockphoto.com/id/1092130320/photo/mixed-brazilian-snack.jpg?s=612x612');"></div>
+    <div class="slide" style="background-image: url('https://www.shutterstock.com/image-photo/coxinha-kibbeh-cheese-balls-typical-600nw-2329583759.jpg');"></div>
+</div>
+
+<div class="card">
+    <h2>✅ Finalizar Pedido</h2>
+    
+    <h3>📍 Endereço de Entrega</h3>
+    <input id="rua" placeholder="Rua, avenida e bairro">
+    <input id="numero" placeholder="Número, complemento">
+
+    <h3>💰 Valor Total</h3>
+    <p>R$ <span id="total">0</span>,00</p>
+
+    <div class="pix">
+        <strong>💳 Pagamento via Pix</strong><br><br>
+        <strong>Chave: 106.833.531-95</strong><br><br>
+        <button onclick="copiar()" style="background:#4caf50; color:white;">📋 Copiar Chave Pix</button>
+    </div>
+
+    <button onclick="whatsapp()" style="background:#25D366; color:white; font-size:20px;">
+        📲 Enviar Pedido no WhatsApp
+    </button>
+</div>
+
+<script>
+// Leitura segura do carrinho
+let cart = [];
+let total = 0;
+
+const storedCart = localStorage.getItem('cart');
+if (storedCart) {
+    try {
+        const parsed = JSON.parse(storedCart);
+        if (Array.isArray(parsed)) cart = parsed;
+    } catch (e) { cart = []; }
+}
+
+const storedTotal = localStorage.getItem('total');
+if (storedTotal) total = parseFloat(storedTotal) || 0;
+
+document.getElementById('total').innerText = total;
+
+function copiar() {
+    navigator.clipboard.writeText('106.833.531-95');
+    alert('✅ Chave Pix copiada!');
+}
+
+function whatsapp() {
+    const rua = document.getElementById('rua').value.trim();
+    const numero = document.getElementById('numero').value.trim();
+
+    if (!rua || !numero) {
+        alert('⚠️ Preencha o endereço completo.');
+        return;
+    }
+
+    if (cart.length === 0 || total === 0) {
+        alert('⚠️ Adicione itens no carrinho primeiro!');
+        return;
+    }
+
+    let itensTexto = '';
+    for (let i = 0; i < cart.length; i++) {
+        itensTexto += `${i + 1}. ${cart[i].nome}\n`;
+    }
+
+    const mensagem = `Olá! Quero fazer um pedido:
+
+Endereço:
+${rua}
+${numero}
+
+Pedido:
+${itensTexto}
+
+Total a pagar: R$ ${total},00
+
+Vou fazer o Pix na chave 106.833.531-95 e envio o comprovante aqui assim que pagar.
+
+Obrigado!`;
+
+    const encoded = encodeURIComponent(mensagem);
+    // Número atualizado: 69981726850
+    window.location.href = `https://wa.me/5569981726850?text=${encoded}`;
+}
+
+// Slideshow
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+function nextSlide() {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+}
+setInterval(nextSlide, 8000);
+</script>
+
+</body>
+</html>
