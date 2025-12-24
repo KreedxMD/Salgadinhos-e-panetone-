@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centro de Salgado Deliciosos e Panetones</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    color: #333;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+.slideshow-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -2;
+}
+.slide {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+.slide.active { opacity: 1; }
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: -1;
+}
+header {
+    background: #c62828;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.container {
+    padding: 15px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+.preco-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.add {
+    background: #2e7d32;
+    color: #fff;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+}
+.btn {
+    background: #1565c0;
+    color: #fff;
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    margin-top: 10px;
+}
+.total {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: right;
+    margin: 15px 0;
+}
+h2 { margin-top: 0; color: #c62828; }
+.atendimento {
+    background: #ffeb3b;
+    color: #c62828;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 18px;
+}
+</style>
+</head>
+<body>
+
+<div class="slideshow-container">
+    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1624306346884-1e83b83c16ca?ixlib=rb-4.0.3&auto=format&fit=crop&q=80');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1630405090914-87b2d73c9c9e?ixlib=rb-4.0.3&auto=format&fit=crop&q=80');"></div>
+    <div class="slide" style="background-image: url('https://st2.depositphotos.com/4366637/10184/i/450/depositphotos_101845522-stock-photo-mixed-brazilian-snack-on-the.jpg');"></div>
+    <div class="slide" style="background-image: url('https://interlasermaquinas.com.br/wp-content/uploads/2022/12/salgados-para-festa-de-aniversario-1024x682.jpg');"></div>
+    <div class="slide" style="background-image: url('https://media.istockphoto.com/id/1092130320/photo/mixed-brazilian-snack.jpg?s=612x612');"></div>
+    <div class="slide" style="background-image: url('https://www.shutterstock.com/image-photo/coxinha-kibbeh-cheese-balls-typical-600nw-2329583759.jpg');"></div>
+</div>
+
+<header>
+    <strong style="font-size:28px;">Centro de Salgado Deliciosos</strong><br>
+    <span style="font-size:18px;">Faça seu pedido online – Entrega rápida!</span><br>
+    <div class="atendimento">🕒 Atendimento 24 horas – Pedidos a qualquer hora!</div>
+</header>
+
+<div class="container">
+    <!-- Salgados -->
+    <div class="card">
+        <h2>🍴 Cardápio de Salgados</h2>
+        <div class="item">
+            <span>Meio Centro (50 unidades)</span>
+            <div class="preco-btn">
+                <span>R$20</span>
+                <button class="add" onclick="add('Meio Centro (50 unidades)',20)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <span>Um Centro (100 unidades)</span>
+            <div class="preco-btn">
+                <span>R$30</span>
+                <button class="add" onclick="add('Um Centro (100 unidades)',30)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <span>Combo 200 unidades + Refrigerante</span>
+            <div class="preco-btn">
+                <span>R$65</span>
+                <button class="add" onclick="add('Combo 200 unidades + Refrigerante',65)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panetones (sabores atualizados) -->
+    <div class="card">
+        <h2>🎄 Cardápio de Panetones</h2>
+        <div class="item">
+            <span>Panetone Nutella com Morango</span>
+            <div class="preco-btn">
+                <span>R$60</span>
+                <button class="add" onclick="add('Panetone Nutella com Morango',60)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <span>Panetone Chocolate com Morango</span>
+            <div class="preco-btn">
+                <span>R$65</span>
+                <button class="add" onclick="add('Panetone Chocolate com Morango',65)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <span>Panetone Leite Ninho com Coco</span>
+            <div class="preco-btn">
+                <span>R$60</span>
+                <button class="add" onclick="add('Panetone Leite Ninho com Coco',60)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <span>Panetone Chocolate com Maracujá</span>
+            <div class="preco-btn">
+                <span>R$65</span>
+                <button class="add" onclick="add('Panetone Chocolate com Maracujá',65)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <span>Panetone Leite Ninho com Coco e Morango</span>
+            <div class="preco-btn">
+                <span>R$65</span>
+                <button class="add" onclick="add('Panetone Leite Ninho com Coco e Morango',65)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Refrigerantes -->
+    <div class="card">
+        <h2>🥤 Refrigerantes (Adicionais - 2L)</h2>
+        <div class="item">
+            <span>Refrigerante Dydyo</span>
+            <div class="preco-btn">
+                <span>R$8</span>
+                <button class="add" onclick="add('Refrigerante Dydyo 2L',8)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <span>Coca Cola</span>
+            <div class="preco-btn">
+                <span>R$15</span>
+                <button class="add" onclick="add('Refrigerante Coca Cola 2L',15)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <span>Fanta</span>
+            <div class="preco-btn">
+                <span>R$12</span>
+                <button class="add" onclick="add('Refrigerante Fanta 2L',12)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carrinho -->
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2>🛒 Carrinho</h2>
+            <button onclick="limparCarrinho(event)" title="Limpar carrinho" style="background:#f44336;color:#fff;border:none;border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer">🗑️</button>
+        </div>
+        <div id="lista"></div>
+        <p class="total">Total: R$ <span id="total">0</span>,00</p>
+        <a href="checkout.html"><button class="btn">Finalizar Pedido ➜</button></a>
+    </div>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let total = cart.reduce((s,i) => s + i.preco, 0);
+update();
+
+function add(nome, preco) {
+    cart.push({nome, preco});
+    localStorage.setItem('cart', JSON.stringify(cart));
+    total += preco;
+    update();
+}
+
+function update() {
+    document.getElementById('total').innerText = total;
+    localStorage.setItem('total', total);
+    const lista = document.getElementById('lista');
+    lista.innerHTML = '';
+    cart.forEach(i => {
+        lista.innerHTML += `<p style="margin:8px 0;">• ${i.nome} - R$${i.preco}</p>`;
+    });
+}
+
+function limparCarrinho(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    cart = [];
+    total = 0;
+    localStorage.removeItem('cart');
+    localStorage.setItem('total', 0);
+    update();
+}
+
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+function nextSlide() {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+}
+setInterval(nextSlide, 8000);
+</script>
+</body>
+</html>
