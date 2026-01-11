@@ -1,275 +1,176 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Centro de Salgado Deliciosos e Panetones</title>
-<style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    color: #333;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aprender JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      background: #0f1220;
+      color: #e9ecf1;
+    }
+    header {
+      padding: 20px;
+      background: linear-gradient(135deg, #5b8cff, #7cf);
+      color: #081018;
+    }
+    main {
+      padding: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .video-wrap {
+      position: relative;
+      padding-top: 56.25%;
+      background: #111;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    .video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .blocked {
+      display: grid;
+      place-items: center;
+      height: 100%;
+      text-align: center;
+      padding: 20px;
+      background: repeating-linear-gradient(
+        45deg,
+        #141833,
+        #141833 10px,
+        #10142b 10px,
+        #10142b 20px
+      );
+    }
+    .blocked h2 { margin-bottom: 8px; }
+    .blocked p { opacity: .9; }/* Banner de consentimento */
+.cookie-banner {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  background: #0b1028;
+  border: 1px solid #2a3170;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+  display: none;
+  z-index: 1000;
 }
-.slideshow-container {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -2;
-}
-.slide {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out;
-}
-.slide.active { opacity: 1; }
-body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.45);
-    z-index: -1;
-}
-header {
-    background: #c62828;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-.container {
-    padding: 15px;
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-}
-.card {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-}
-.item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    font-size: 18px;
-}
-.preco-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.cookie-banner.show { display: block; }
+.cookie-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
 }
 button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #2a3170;
+  background: #12164a;
+  color: #e9ecf1;
+  cursor: pointer;
 }
-.add {
-    background: #2e7d32;
-    color: #fff;
-    font-size: 20px;
-    width: 40px;
-    height: 40px;
+button.primary {
+  background: #5b8cff;
+  color: #081018;
+  border-color: #5b8cff;
 }
-.btn {
-    background: #1565c0;
-    color: #fff;
-    width: 100%;
-    padding: 15px;
-    font-size: 18px;
-    margin-top: 10px;
-}
-.total {
-    font-size: 20px;
-    font-weight: bold;
-    text-align: right;
-    margin: 15px 0;
-}
-h2 { margin-top: 0; color: #c62828; }
-.atendimento {
-    background: #ffeb3b;
-    color: #c62828;
-    font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 20px;
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 18px;
-}
-</style>
+footer { opacity: .7; margin-top: 24px; }
+
+  </style>
 </head>
 <body>
-
-<div class="slideshow-container">
-    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1624306346884-1e83b83c16ca?ixlib=rb-4.0.3&auto=format&fit=crop&q=80');"></div>
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1630405090914-87b2d73c9c9e?ixlib=rb-4.0.3&auto=format&fit=crop&q=80');"></div>
-    <div class="slide" style="background-image: url('https://st2.depositphotos.com/4366637/10184/i/450/depositphotos_101845522-stock-photo-mixed-brazilian-snack-on-the.jpg');"></div>
-    <div class="slide" style="background-image: url('https://interlasermaquinas.com.br/wp-content/uploads/2022/12/salgados-para-festa-de-aniversario-1024x682.jpg');"></div>
-    <div class="slide" style="background-image: url('https://media.istockphoto.com/id/1092130320/photo/mixed-brazilian-snack.jpg?s=612x612');"></div>
-    <div class="slide" style="background-image: url('https://www.shutterstock.com/image-photo/coxinha-kibbeh-cheese-balls-typical-600nw-2329583759.jpg');"></div>
-</div>
-
-<header>
-    <strong style="font-size:28px;">Centro de Salgado Deliciosos</strong><br>
-    <span style="font-size:18px;">Faça seu pedido online – Entrega rápida!</span><br>
-    <div class="atendimento">🕒 Atendimento 24 horas – Pedidos a qualquer hora!</div>
-</header>
-
-<div class="container">
-    <!-- Salgados -->
-    <div class="card">
-        <h2>🍴 Cardápio de Salgados</h2>
-        <div class="item">
-            <span>Meio Centro (50 unidades)</span>
-            <div class="preco-btn">
-                <span>R$20</span>
-                <button class="add" onclick="add('Meio Centro (50 unidades)',20)">+</button>
-            </div>
+  <header>
+    <h1>Aprenda JavaScript</h1>
+    <p>Conteúdo educacional — respeitando sua privacidade.</p>
+  </header>  <main>
+    <section class="video-wrap" id="videoContainer">
+      <!-- Conteúdo bloqueado até consentimento -->
+      <div class="blocked" id="blocked">
+        <div>
+          <h2>Diretrizes de Cookies</h2>
+          <p>Para assistir ao vídeo do YouTube, você precisa aceitar o uso básico de cookies do YouTube.
+          Não coletamos IP, localização ou dados pessoais.</p>
         </div>
-        <div class="item">
-            <span>Um Centro (100 unidades)</span>
-            <div class="preco-btn">
-                <span>R$30</span>
-                <button class="add" onclick="add('Um Centro (100 unidades)',30)">+</button>
-            </div>
-        </div>
-        <div class="item">
-            <span>Combo 200 unidades + Refrigerante</span>
-            <div class="preco-btn">
-                <span>R$65</span>
-                <button class="add" onclick="add('Combo 200 unidades + Refrigerante',65)">+</button>
-            </div>
-        </div>
+      </div>
+    </section><footer>
+  <p>Ao aceitar, apenas liberamos o embed do YouTube. Nenhum dado pessoal é coletado.</p>
+  <p><em>Demonstração educativa:</em> você pode informar um <strong>nome de exibição</strong> (opcional) que fica salvo apenas no seu navegador.</p>
+</footer>
+
+  </main>  <div class="cookie-banner" id="cookieBanner">
+    <strong>Cookies essenciais</strong>
+    <p>Usamos apenas o necessário para exibir o vídeo do YouTube. Sem rastreamento adicional.</p>
+    <div class="cookie-actions">
+      <button class="primary" id="acceptBtn">Aceitar</button>
+      <button id="rejectBtn">Rejeitar</button>
     </div>
+  </div>  <script>
+    const KEY = 'cookie_consent_basic';
+    const NAME_KEY = 'display_name_local';
+    const banner = document.getElementById('cookieBanner');
+    const blocked = document.getElementById('blocked');
+    const container = document.getElementById('videoContainer');
 
-    <!-- Panetones (sabores atualizados) -->
-    <div class="card">
-        <h2>🎄 Cardápio de Panetones</h2>
-        <div class="item">
-            <span>Panetone Nutella com Morango</span>
-            <div class="preco-btn">
-                <span>R$60</span>
-                <button class="add" onclick="add('Panetone Nutella com Morango',60)">+</button>
-            </div>
-        </div>
-        <div class="item">
-            <span>Panetone Chocolate com Morango</span>
-            <div class="preco-btn">
-                <span>R$65</span>
-                <button class="add" onclick="add('Panetone Chocolate com Morango',65)">+</button>
-            </div>
-        </div>
-        <div class="item">
-            <span>Panetone Leite Ninho com Coco</span>
-            <div class="preco-btn">
-                <span>R$60</span>
-                <button class="add" onclick="add('Panetone Leite Ninho com Coco',60)">+</button>
-            </div>
-        </div>
-        <div class="item">
-            <span>Panetone Chocolate com Maracujá</span>
-            <div class="preco-btn">
-                <span>R$65</span>
-                <button class="add" onclick="add('Panetone Chocolate com Maracujá',65)">+</button>
-            </div>
-        </div>
-        <div class="item">
-            <span>Panetone Leite Ninho com Coco e Morango</span>
-            <div class="preco-btn">
-                <span>R$65</span>
-                <button class="add" onclick="add('Panetone Leite Ninho com Coco e Morango',65)">+</button>
-            </div>
-        </div>
-    </div>
+    function hasConsent() {
+      return localStorage.getItem(KEY) === 'accepted';
+    }
 
-    <!-- Refrigerantes -->
-    <div class="card">
-        <h2>🥤 Refrigerantes (Adicionais - 2L)</h2>
-        <div class="item">
-            <span>Refrigerante Dydyo</span>
-            <div class="preco-btn">
-                <span>R$8</span>
-                <button class="add" onclick="add('Refrigerante Dydyo 2L',8)">+</button>
-            </div>
-        </div>
-        <div class="item">
-            <span>Coca Cola</span>
-            <div class="preco-btn">
-                <span>R$15</span>
-                <button class="add" onclick="add('Refrigerante Coca Cola 2L',15)">+</button>
-            </div>
-        </div>
-        <div class="item">
-            <span>Fanta</span>
-            <div class="preco-btn">
-                <span>R$12</span>
-                <button class="add" onclick="add('Refrigerante Fanta 2L',12)">+</button>
-            </div>
-        </div>
-    </div>
+    function showVideo() {
+      if (blocked) blocked.remove();
+      if (!container.querySelector('iframe')) {
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube.com/embed/WRlfwBof66s';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        container.appendChild(iframe);
+      }
+      showWelcome();
+    }
 
-    <!-- Carrinho -->
-    <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2>🛒 Carrinho</h2>
-            <button onclick="limparCarrinho(event)" title="Limpar carrinho" style="background:#f44336;color:#fff;border:none;border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer">🗑️</button>
-        </div>
-        <div id="lista"></div>
-        <p class="total">Total: R$ <span id="total">0</span>,00</p>
-        <a href="checkout.html"><button class="btn">Finalizar Pedido ➜</button></a>
-    </div>
-</div>
+    function showWelcome() {
+      let name = localStorage.getItem(NAME_KEY);
+      if (!name) {
+        name = prompt('Nome de exibição (opcional):');
+        if (name) localStorage.setItem(NAME_KEY, name);
+      }
+      if (name) {
+        const h = document.createElement('p');
+        h.textContent = `Bem-vindo, ${name}!`;
+        h.style.opacity = '.85';
+        container.after(h);
+      }
+    }
 
-<script>
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-let total = cart.reduce((s,i) => s + i.preco, 0);
-update();
+    function init() {
+      if (hasConsent()) {
+        showVideo();
+      } else {
+        banner.classList.add('show');
+      }
+    }
 
-function add(nome, preco) {
-    cart.push({nome, preco});
-    localStorage.setItem('cart', JSON.stringify(cart));
-    total += preco;
-    update();
-}
+    document.getElementById('acceptBtn').onclick = () => {
+      localStorage.setItem(KEY, 'accepted');
+      banner.classList.remove('show');
+      showVideo();
+    };
 
-function update() {
-    document.getElementById('total').innerText = total;
-    localStorage.setItem('total', total);
-    const lista = document.getElementById('lista');
-    lista.innerHTML = '';
-    cart.forEach(i => {
-        lista.innerHTML += `<p style="margin:8px 0;">• ${i.nome} - R$${i.preco}</p>`;
-    });
-}
+    document.getElementById('rejectBtn').onclick = () => {
+      localStorage.setItem(KEY, 'rejected');
+      banner.classList.remove('show');
+      // permanece bloqueado
+    };
 
-function limparCarrinho(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    cart = [];
-    total = 0;
-    localStorage.removeItem('cart');
-    localStorage.setItem('total', 0);
-    update();
-}
-
-let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
-function nextSlide() {
-    slides[currentSlide].classList.remove('active');
-    currentSlide = (currentSlide + 1) % slides.length;
-    slides[currentSlide].classList.add('active');
-}
-setInterval(nextSlide, 8000);
-</script>
-</body>
+    init();
+  </script></body>
 </html>
